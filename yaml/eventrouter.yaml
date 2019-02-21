@@ -18,7 +18,7 @@ metadata:
   name: eventrouter 
   namespace: kube-system
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: eventrouter 
@@ -27,7 +27,7 @@ rules:
   resources: ["events"]
   verbs: ["get", "watch", "list"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: eventrouter 
@@ -44,14 +44,14 @@ apiVersion: v1
 data:
   config.json: |- 
     {
-      "sink": "glog"
+      "sink": "kafka"
     }
 kind: ConfigMap
 metadata:
   name: eventrouter-cm
   namespace: kube-system
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: eventrouter
@@ -59,7 +59,7 @@ metadata:
   labels:
     app: eventrouter
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: eventrouter
@@ -71,7 +71,7 @@ spec:
     spec:
       containers:
         - name: kube-eventrouter
-          image: gcr.io/heptio-images/eventrouter:latest
+          image: fastop/eventrouter:kafka
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - name: config-volume

@@ -14,22 +14,24 @@ This project has several objectives, which include:
 
 ### NOTE:
 
-By default, eventrouter is configured to leverage existing EFK stacks by outputting wrapped json object which are easy to index in elastic search. 
+There is  a default image: fastop/eventrouter:kafka, use my kafka-cluster[K8s-kafka][k8s-kafka], you can build yourself image and use yours kafka
+cluster.
 
-## Non-Goals: 
-
-* This service does not provide a querable extension, that is a responsibility of the 
-_sink_
-* This service does not serve as a storage layer, that is also the responsibility of the _sink_
+just vist interface.go.
 
 ## Running Eventrouter 
+
+Clone code:
+```
+$git clone https://github.com/cuishuaigit/eventrouter-kafka.git
+```
 Standup: 
 ```
-$ kubectl create -f https://raw.githubusercontent.com/heptiolabs/eventrouter/master/yaml/eventrouter.yaml
+$ kubectl create -f eventrouter-kafka/yaml/eventrouter.yaml
 ```
 Teardown: 
 ```
-$ kubectl delete -f https://raw.githubusercontent.com/heptiolabs/eventrouter/master/yaml/eventrouter.yaml
+$ kubectl delete -f eventrouter-kafka/yaml/eventrouter.yaml
 ```
 
 ### Inspecting the output 
@@ -40,3 +42,4 @@ $ kubectl logs -f deployment/eventrouter -n kube-system
 Watch events roll through the system and hopefully stream into your ES cluster for mining, Hooray!
 
 [kubernetes]: https://github.com/kubernetes/kubernetes/ "Kubernetes"
+[k8s-kafka]: https://github.com/cuishuaigit/k8s-kafka "K8s-kafka"
